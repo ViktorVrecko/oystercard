@@ -13,4 +13,13 @@ describe Oystercard do
     end
   end
 
+  describe "maximum limit" do
+    it "raises an error if limit is exceeded" do
+         
+      described_class::CARD_LIMIT.times { subject.top_up!(1) }
+      expect {subject.top_up! 1 }.to raise_error "Limit of #{described_class::CARD_LIMIT} reached" 
+       
+    end
+  end     
+
 end
