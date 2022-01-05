@@ -14,6 +14,12 @@ CARD_LIMIT = 90
     
   end
   
+  def deduct!(value)
+  
+    @balance -= value
+
+  end 
+  
   private 
 
   def top_up_check(value)
