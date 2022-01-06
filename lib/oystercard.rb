@@ -3,7 +3,8 @@ CARD_LIMIT = 90
 MINIMUM_BALANCE = 1
 MIN_FARE = 1
 
-  attr_reader :balance 
+  attr_reader :balance
+  attr_reader :entry_station
   #attr_reader :in_journey
 
   #def balance
@@ -12,7 +13,8 @@ MIN_FARE = 1
 
   def initialize()
     @balance = 0
-    @status = false
+    #@status = false
+    @entry_station = nil
   end  
 
   def top_up!(value)
@@ -26,17 +28,20 @@ MIN_FARE = 1
   
 
   def in_journey?
-    @status
+    #@status
+    !!@entry_station
   end
 
-  def touch_in
+  def touch_in(station)
     touch_in_check
-    @status = true
+    #@status = true
+    @entry_station = station
   end
 
   def touch_out
     deduct!(MIN_FARE)
     @status = false
+    @entry_station = nil
   end
 
 
@@ -52,6 +57,7 @@ MIN_FARE = 1
   end
 
   def touch_in_check
-    raise "insufficient balance: #{MINIMUM_BALANCE}" if  @balance < MINIMUM_BALANCE
+    fail "Insufficient balance" if  (@balance < MINIMUM_BALANCE)
   end 
+
 end
