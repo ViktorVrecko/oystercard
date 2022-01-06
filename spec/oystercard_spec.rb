@@ -24,14 +24,14 @@ describe Oystercard do
 
   describe "deduct method" do
     
-    it {is_expected.to respond_to(:deduct!).with(1).argument  }     
+    # it {is_expected.to respond_to(:deduct!).with(1).argument  }     
     
-    it "deductes the fare of my card" do
+    # it "deductes the fare of my card" do
     
-      subject.top_up!(20)
-      #amount = subject.balance
-      expect { subject.deduct!(10) }.to change {subject.balance}.by -10    
-    end
+    #   subject.top_up!(20)
+    #  #amount = subject.balance
+    #  expect { subject.deduct!(10) }.to change {subject.balance}.by -10    
+    # end
   end    
   
   describe "touch_in_out" do
@@ -58,8 +58,10 @@ describe Oystercard do
    expect {card.touch_in}.to raise_error "insufficient balance: #{described_class::MINIMUM_BALANCE}"  
   end
   
-  
-
+  it "charges by minimum fare" do
+    card = Oystercard.new
+    expect {card.touch_out}.to change{card.balance}.by(-described_class::MIN_FARE)
+  end
 
 
 end
