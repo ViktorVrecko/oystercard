@@ -33,5 +33,33 @@ describe Oystercard do
       expect { subject.deduct!(10) }.to change {subject.balance}.by -10    
     end
   end    
+  
+  describe "touch_in_out" do
+
+    it { is_expected.to respond_to(:in_journey?) }
+    it { is_expected.to respond_to(:touch_in) }
+    it { is_expected.to respond_to(:touch_out) }
+    
+    #it 'is initially not in a journey' do
+    #  expect(subject).not_to be_in_journey
+    # end
+
+    it "can touch out" do
+      subject.top_up!(described_class::CARD_LIMIT)
+      subject.touch_in
+      subject.touch_out
+      expect(subject).not_to be_in_journey
+      #expect(subject.in_journey?).to eq false
+    end 
+  end
+  
+  it "raise error if insufficient balance" do
+   card = Oystercard.new
+   expect {card.touch_in}.to raise_error "insufficient balance: #{described_class::MINIMUM_BALANCE}"  
+  end
+  
+  
+
+
 
 end
